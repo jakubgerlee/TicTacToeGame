@@ -30,7 +30,7 @@ namespace TicTacToe
                 {
                     case CommandTypes.GameForTwo:
                         _gameWithAI = false;
-                        GameStart();
+                        GameLoop();
                         break;
                     case CommandTypes.GameWithComputer:
                         _gameWithAI = true;
@@ -48,20 +48,20 @@ namespace TicTacToe
             Console.WriteLine("\t\t'TIC TAC TOE' - GAME !\n\n");
         }
 
-        public void GameStart()
+        public void GameLoop()
         {
             var board = new Board(_boardSize);
             _boardToPlay = board.CreateBoard();
-            board.DisplayBoard(_boardToPlay);
-
-            if (_gameWithAI)
+            //board.DisplayBoard(_boardToPlay);
+            if (!_gameWithAI)
             {
-                //playwithcomputer
-            }
+                var game = new Game(_boardSize, _boardToPlay);
+                game.GameLoop();
+            } //playwithyourself
             else
             {
-                //playwithyourself
-            }
+            } //playwithcomputer
+
         }
     }
 }

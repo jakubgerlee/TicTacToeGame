@@ -7,6 +7,7 @@ namespace TicTacToe
         private readonly int _boardSize;
         private char _letter = 'A';
 
+
         public Board(int boardSize)
         {
             _boardSize = boardSize;
@@ -75,8 +76,6 @@ namespace TicTacToe
                 }// ----...
                 Console.WriteLine();
             }
-
-            Console.Read();
         }
 
     }

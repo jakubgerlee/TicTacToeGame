@@ -6,8 +6,6 @@ namespace TicTacToe
 {
     public class ConsoleReadHelper
     {
-
-
         public static App.CommandTypes GetCommnadType(string message)
         {
             App.CommandTypes commandType;
