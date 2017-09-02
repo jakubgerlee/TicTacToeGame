@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 
 namespace TicTacToe
@@ -7,15 +8,15 @@ namespace TicTacToe
     {
         private string[,] _tab;
         private static int _boardSize;
-        private string _player = "x"; //x - starting
-        private bool _turn = false; //x -starting
+        private string _currentPlayer = "x"; //x - starting
         private bool _gameFinished = false;
+        private int _fieldsToWin;
 
-        public Game(int boardSize ,string[,] tab)
+        public Game(int boardSize, string[,] tab, int fieldsToWin)
         {
             _boardSize = boardSize;
             _tab = tab;
-
+            _fieldsToWin = fieldsToWin;
         }
 
         public void GameLoop()
@@ -24,37 +25,66 @@ namespace TicTacToe
 
             while (!_gameFinished)
             {
-                board.DisplayBoard(_tab);//displaying board
-                turn();
+                board.DisplayBoard(_tab);//display board
+
+                Turn();//do round
+
+                if (_gameFinished)//check if someone win
+                {
+                    return;
+                }
+
                 Console.Clear();
             }
+
+
         }
 
-        public void turn()
+        public void Turn()
         {
-            //TODO copy+paste to ConsoleReadHelpers later
-            if (_turn)
-            {
-                Console.WriteLine($"Turn: [{_player}]" +
-                                  $"\n Type next step: ");
-                var step = Console.ReadLine();
-                _player = "x";
-                _turn = false;
+            var board = new Board(_boardSize);
+            var currentInfoAboutFields = board.GetCurrentInfoAboutFields();
 
+            var step = ConsoleReadHelper.GetSymbolField( _currentPlayer,"Type next step: ");
+
+            var index = currentInfoAboutFields.FirstOrDefault(x => x.SymbolField == step);
+            _tab[index.IndexOne, index.IndexTwo] = _currentPlayer; //mark symbol on board
+            
+            index.FieldIsEmpty = false;
+            index.Mark = _currentPlayer;
+            var ifWinner = CheckSomeoneWin();
+
+            if (ifWinner)
+            {
+                Console.WriteLine($"Winner is player: {_currentPlayer.ToUpper()}");
+                _gameFinished = true;
+                return;
+            }
+
+            if (_currentPlayer == "x")
+            {
+                _currentPlayer = "o";
             }
             else
             {
-                Console.WriteLine($"Turn: [{_player}]" +
-                                  $"\n Type next step: ");
-                var step = Console.ReadLine();
-                _player = "o";
-                _turn = true;
+                _currentPlayer = "x";
             }
-
+            
         }
 
+        private bool CheckSomeoneWin()
+        {
+            var CheckWinner = new Winner(_boardSize, _currentPlayer, _fieldsToWin);
+
+            if (CheckWinner.CheckWinnerHorizontal())
+            {
+                return true;
+            }
 
 
+            return false;
+        }
 
     }
 }
+ 

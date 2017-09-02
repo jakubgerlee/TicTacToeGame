@@ -1,11 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Threading;
 
 namespace TicTacToe
 {
     public class ConsoleReadHelper
     {
+
         public static App.CommandTypes GetCommnadType(string message)
         {
             App.CommandTypes commandType;
@@ -76,5 +76,24 @@ namespace TicTacToe
             return number;
         }
 
+        public  static string GetSymbolField(string player, string message)
+        {
+            var board = new Board();
+            var symbolFields = board.GetCurrentInfoAboutFields();
+
+            Console.WriteLine($"Turn: [{player}]" +
+                              $"\n{message}");
+            
+            var answer = Console.ReadLine();
+            
+            while (!symbolFields.Exists(x => x.SymbolField == answer && x.FieldIsEmpty)) 
+            {
+                Console.WriteLine($"This field is occupied, or there is no field {answer} on this board.." +
+                                  $"\n{message}");
+                answer = Console.ReadLine();
+            }
+
+            return answer;
+        }
     }
 }
