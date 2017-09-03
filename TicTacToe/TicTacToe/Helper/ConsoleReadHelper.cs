@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 
 namespace TicTacToe
@@ -85,15 +86,18 @@ namespace TicTacToe
                               $"\n{message}");
             
             var answer = Console.ReadLine();
-            
-            while (!symbolFields.Exists(x => x.SymbolField == answer && x.FieldIsEmpty)) 
+            var zmienna = symbolFields.FirstOrDefault(x => x.SymbolField == answer);
+
+            while (zmienna.FieldIsEmpty == false)
             {
                 Console.WriteLine($"This field is occupied, or there is no field {answer} on this board.." +
                                   $"\n{message}");
                 answer = Console.ReadLine();
+                zmienna = symbolFields.FirstOrDefault(x => x.SymbolField == answer);
+
             }
 
             return answer;
         }
     }
-}
+}//!symbolFields.Exists(x => x.SymbolField == answer || x.FieldIsEmpty == false)

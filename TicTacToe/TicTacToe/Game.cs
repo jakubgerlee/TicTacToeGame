@@ -7,7 +7,7 @@ namespace TicTacToe
     public class Game
     {
         private string[,] _tab;
-        private static int _boardSize;
+        private int _boardSize;
         private string _currentPlayer = "x"; //x - starting
         private bool _gameFinished = false;
         private int _fieldsToWin;
@@ -17,6 +17,11 @@ namespace TicTacToe
             _boardSize = boardSize;
             _tab = tab;
             _fieldsToWin = fieldsToWin;
+        }
+
+        public Game()
+        {
+            
         }
 
         public void GameLoop()
@@ -31,6 +36,12 @@ namespace TicTacToe
 
                 if (_gameFinished)//check if someone win
                 {
+                    _tab = null;
+                    _boardSize = 0;
+                    _currentPlayer = "x";
+                    _gameFinished = false;
+                    _fieldsToWin = 0;
+                    board.CleanGame();
                     return;
                 }
 

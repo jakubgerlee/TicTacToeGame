@@ -41,9 +41,6 @@ namespace TicTacToe
             }
 
             return false;
-
-            var allMarks = currentInfoAboutFields.FindAll(x => x.Mark == _currentPlayer);
-
         }
     }
 }

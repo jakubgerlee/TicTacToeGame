@@ -15,7 +15,9 @@ namespace TicTacToe
         public static List<Field> CurrentInfoAboutFields = new List<Field>();
 
 
-        public Board() { }
+        public Board()
+        {
+        }
 
         public Board(int boardSize)
         {
@@ -42,22 +44,22 @@ namespace TicTacToe
             {
                 boardTab[0, i] = i.ToString();
 
-            }//1,2,3,4...
+            } //1,2,3,4...
 
             for (int i = 1; i <= _boardSize; i++)
             {
                 boardTab[i, 0] = _letterFrame.ToString();
 
                 ++_letterFrame;
-                
-            }//A,B,C,D...
+
+            } //A,B,C,D...
 
             return boardTab;
         }
 
         public string[,] FillWhiteSpaceInEmptyFields(string[,] boardTab)
         {
-            for (int i = 1; i <=_boardSize; i++)
+            for (int i = 1; i <= _boardSize; i++)
             {
                 for (int j = 1; j <= _boardSize; j++)
                 {
@@ -69,7 +71,7 @@ namespace TicTacToe
                 }
                 _letterIndexSymbol++; //iterate A
 
-            }//" "...
+            } //" "...
             return boardTab;
         }
 
@@ -109,20 +111,20 @@ namespace TicTacToe
             {
                 for (int j = 0; j <= _boardSize; j++)
                 {
-                    Console.Write(boardTab[i, j] + "|" );
-                }//x|o|x|...
+                    Console.Write(boardTab[i, j] + "|");
+                } //x|o|x|...
 
                 Console.WriteLine();
 
                 for (int j = 0; j <= _boardSize; j++)
                 {
                     Console.Write(separator);
-                }// ----...
+                } // ----...
                 Console.WriteLine();
             }
         }
 
-        private  void FillListWithInformationField()
+        private void FillListWithInformationField()
         {
             int counter = 1;
             char letter = 'A';
@@ -151,6 +153,16 @@ namespace TicTacToe
         public List<Field> GetCurrentInfoAboutFields()
         {
             return CurrentInfoAboutFields;
+        }
+
+        public void CleanGame()
+        {
+            _letterFrame = 'A';
+            _letterIndexSymbol = 'A';
+            _counter = 0;
+            IndexDictionary = null;
+            CurrentInfoAboutFields = null;
+
         }
     }
 }

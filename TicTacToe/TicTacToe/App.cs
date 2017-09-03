@@ -22,6 +22,7 @@ namespace TicTacToe
         {
             while (true)
             {
+                var board = new Board();
                 Introductions();
 
                 _boardSize = ConsoleReadHelper.GetBoardSize("Type board size (3-10)"); //NIE MOZE BYC PUSTY
