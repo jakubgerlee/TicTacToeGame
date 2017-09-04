@@ -132,27 +132,23 @@ namespace TicTacToe
 
             var checkFiledOnRight= currentInfoAboutFields.FirstOrDefault(x => x.IndexOne == field1.IndexOne && x.IndexTwo == field1.IndexTwo+1); //sprawdzenie czy symbolu po prawej
 
-            if (checkFiledOnRight == null)//jesli pusty, wtedy wyszedł poza zakres, i musi sprawdzić z lewej strony
+            if (checkFiledOnRight == null || checkFiledOnRight.Mark=="x")//jesli pusty, wtedy wyszedł poza zakres, i musi sprawdzić z lewej strony
             {
                 var checkFiledOnLeft = currentInfoAboutFields
                     .FirstOrDefault(x => x.IndexOne == field1.IndexOne && x.IndexTwo == field1.IndexTwo - (counterSymbolInRow));//sprawdzenie czy symbolu po lewej
 
                 if (checkFiledOnLeft == null)
                 {
-                    _field = null;
-                }else if(checkFiledOnLeft.FieldIsEmpty == true)
+                }
+                else if(checkFiledOnLeft.FieldIsEmpty == true)
                 {
                     _field = checkFiledOnLeft.SymbolField;
                     _filedIsFilled = true;
                 }
-                else
-                {
-                    _field = null;
-                }
+
             }
             else if(checkFiledOnRight.FieldIsEmpty == false)
             {
-                    _field = null;
             }
             else if (checkFiledOnRight.FieldIsEmpty == true )
             {
@@ -164,6 +160,7 @@ namespace TicTacToe
 
         public bool CheckItIsCloseToWinVertical(int fieldsToWin)
         {
+            _humanIsCloseToWin = false;
             var board = new Board();
             var currentInfoAboutFields = board.GetCurrentInfoAboutFields();
             var counterSymbolInRow = 0;
@@ -229,21 +226,24 @@ namespace TicTacToe
 
                 if (findField == null)
                 {
-                    _field = null;
+
                 }
                 else if (findField.FieldIsEmpty == true)
                 {
                     _field = findField.SymbolField;
                     _filedIsFilled = true;
                 }
-                else
-                {
-                    _field = null;
-                }
+
             }
             else if (findField.FieldIsEmpty == false)
             {
-                _field = null;
+                findField = currentInfoAboutFields
+                    .FirstOrDefault(x => x.IndexOne == field1.IndexOne + 2 && x.IndexTwo == field1.IndexTwo);
+                if (findField.FieldIsEmpty == true)
+                {
+                    _field = findField.SymbolField;
+                    _filedIsFilled = true;
+                }
             }
             else if (findField.FieldIsEmpty == true)
             {
