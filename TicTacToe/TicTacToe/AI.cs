@@ -237,13 +237,22 @@ namespace TicTacToe
             }
             else if (findField.FieldIsEmpty == false)
             {
-                findField = currentInfoAboutFields
-                    .FirstOrDefault(x => x.IndexOne == field1.IndexOne + 2 && x.IndexTwo == field1.IndexTwo);
-                if (findField.FieldIsEmpty == true)
+                try
                 {
-                    _field = findField.SymbolField;
-                    _filedIsFilled = true;
+                    findField = currentInfoAboutFields
+                        .FirstOrDefault(x => x.IndexOne == field1.IndexOne + 2 && x.IndexTwo == field1.IndexTwo);
+                    if (findField.FieldIsEmpty == true)
+                    {
+                        _field = findField.SymbolField;
+                        _filedIsFilled = true;
+                    }
+
                 }
+                catch (Exception e)
+                {
+                    return;
+                }
+
             }
             else if (findField.FieldIsEmpty == true)
             {
