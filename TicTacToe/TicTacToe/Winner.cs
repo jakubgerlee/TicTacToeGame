@@ -191,6 +191,7 @@ namespace TicTacToe
                         }
                     }
                 }
+
                 counter = 0;
                 counterIndexOne = 1;
                 counterIndexTwo = i;
@@ -228,8 +229,6 @@ namespace TicTacToe
                 counterIndexOne = i;
                 counterIndexTwo = 6;
             }// checking form middle, to upper
-
-
 
             return false;
         }
