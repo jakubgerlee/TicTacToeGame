@@ -78,8 +78,6 @@ namespace TicTacToe
                 }
                 counter = 0;
             }
-
-
             return false;
         }
 

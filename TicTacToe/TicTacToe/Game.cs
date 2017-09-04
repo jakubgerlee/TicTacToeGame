@@ -56,8 +56,18 @@ namespace TicTacToe
         {
             var board = new Board(_boardSize);
             var currentInfoAboutFields = board.GetCurrentInfoAboutFields();
+            string step;
 
-            var step = ConsoleReadHelper.GetSymbolField( _currentPlayer,"Type next step: ");
+            if (_gameWithAI && _currentPlayer == "o")
+            {
+                var computer = new AI();
+                step = computer.Move(_boardSize, _fieldsToWin);
+            }
+            else
+            {
+                 step = ConsoleReadHelper.GetSymbolField(_currentPlayer, "Type next step: ");
+            }
+
 
             var index = currentInfoAboutFields.FirstOrDefault(x => x.SymbolField == step);
 
