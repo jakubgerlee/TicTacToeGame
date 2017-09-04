@@ -42,11 +42,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="Field.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Helper\ConsoleReadHelper.cs" />
+    <Compile Include="Index.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Winner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

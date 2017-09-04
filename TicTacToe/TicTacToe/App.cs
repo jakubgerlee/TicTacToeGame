@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace TicTacToe
 {
     public class App
     {
-        private static bool _exit = false;
         private static int _boardSize;
+        private static int _fieldsToWin;
         private string[,] _boardToPlay;
         private bool _gameWithAI = false;
 
@@ -16,26 +15,31 @@ namespace TicTacToe
             GameWithComputer,
             Exit
         }
-
-
+        
         public void Menu()
         {
-            Introductions();
-
-            _boardSize = ConsoleReadHelper.GetBoardSize("Type board size (3-10)");
-
-            while (!_exit)
+            while (true)
             {
+                var board = new Board();
+                Introductions();
+
+                _boardSize = ConsoleReadHelper.GetBoardSize("Type board size (3-10)"); //NIE MOZE BYC PUSTY
+                _fieldsToWin = ConsoleReadHelper.GetBoardSize($"How many symbols next each other do you need to win ?" +
+                                                              $"[Min 3 Max {_boardSize}] type:  "); // DODAJ SPRAWDZENIE CZY JEST GIT
+
                 switch (ConsoleReadHelper.GetCommnadType("Type command: "))
                 {
                     case CommandTypes.GameForTwo:
+                        Console.Clear();
                         _gameWithAI = false;
-                        GameStart();
+                        GameLoop();
                         break;
                     case CommandTypes.GameWithComputer:
+                        Console.Clear();
                         _gameWithAI = true;
                         break;
                     case CommandTypes.Exit:
+                        Environment.Exit(0);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -48,20 +52,13 @@ namespace TicTacToe
             Console.WriteLine("\t\t'TIC TAC TOE' - GAME !\n\n");
         }
 
-        public void GameStart()
+        public void GameLoop()
         {
             var board = new Board(_boardSize);
             _boardToPlay = board.CreateBoard();
-            board.DisplayBoard(_boardToPlay);
 
-            if (_gameWithAI)
-            {
-                //playwithcomputer
-            }
-            else
-            {
-                //playwithyourself
-            }
+            var game = new Game(_boardSize, _boardToPlay, _fieldsToWin);
+            game.GameLoop(_gameWithAI);
         }
     }
 }
