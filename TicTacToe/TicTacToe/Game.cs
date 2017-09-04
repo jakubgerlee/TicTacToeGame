@@ -92,6 +92,20 @@ namespace TicTacToe
                 return true;
             }
 
+            if (CheckWinner.CheckWinnerVertical())
+            {
+                return true;
+            }
+
+            if (CheckWinner.CheckWinnerSlanAtFront())
+            {
+                return true;
+            }
+
+            if (CheckWinner.CheckWinnerSlantAtBack())
+            {
+                return true;
+            }
 
             return false;
         }
