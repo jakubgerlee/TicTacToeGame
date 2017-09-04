@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -81,23 +82,34 @@ namespace TicTacToe
         {
             var board = new Board();
             var symbolFields = board.GetCurrentInfoAboutFields();
+            string inputType;
+            var field = new Field();
 
-            Console.WriteLine($"Turn: [{player}]" +
-                              $"\n{message}");
-            
-            var answer = Console.ReadLine();
-            var zmienna = symbolFields.FirstOrDefault(x => x.SymbolField == answer);
-
-            while (zmienna.FieldIsEmpty == false)
+            do
             {
-                Console.WriteLine($"This field is occupied, or there is no field {answer} on this board.." +
+                Console.WriteLine($"\nTurn: [{player.ToUpper()}]" +
                                   $"\n{message}");
-                answer = Console.ReadLine();
-                zmienna = symbolFields.FirstOrDefault(x => x.SymbolField == answer);
+                inputType = Console.ReadLine();
+
+                field = symbolFields.FirstOrDefault(x => x.SymbolField == inputType);
+
+                if (field==null)
+                {
+                    Console.WriteLine("You typed wrong field...");
+                }
+
+            }while(field==null);
+            
+            while (field.FieldIsEmpty == false)
+            {
+                Console.WriteLine($"This field is occupied, or there is no field {inputType} on this board.." +
+                                  $"\n{message}");
+                inputType = Console.ReadLine();
+                field = symbolFields.FirstOrDefault(x => x.SymbolField == inputType);
 
             }
 
-            return answer;
+            return inputType;
         }
     }
 }//!symbolFields.Exists(x => x.SymbolField == answer || x.FieldIsEmpty == false)

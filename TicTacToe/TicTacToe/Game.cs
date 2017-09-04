@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace TicTacToe
@@ -11,6 +12,7 @@ namespace TicTacToe
         private string _currentPlayer = "x"; //x - starting
         private bool _gameFinished = false;
         private int _fieldsToWin;
+        private bool _gameWithAI = false;
 
         public Game(int boardSize, string[,] tab, int fieldsToWin)
         {
@@ -24,8 +26,10 @@ namespace TicTacToe
             
         }
 
-        public void GameLoop()
+        public void GameLoop(bool gameWithAI)
         {
+            _gameWithAI = gameWithAI;
+
             var board = new Board(_boardSize);
 
             while (!_gameFinished)
@@ -58,10 +62,13 @@ namespace TicTacToe
             var step = ConsoleReadHelper.GetSymbolField( _currentPlayer,"Type next step: ");
 
             var index = currentInfoAboutFields.FirstOrDefault(x => x.SymbolField == step);
+
             _tab[index.IndexOne, index.IndexTwo] = _currentPlayer; //mark symbol on board
             
             index.FieldIsEmpty = false;
             index.Mark = _currentPlayer;
+
+            
             var ifWinner = CheckSomeoneWin();
             var ifDraw = CheckIsItDraw();
 
@@ -69,8 +76,9 @@ namespace TicTacToe
             {
                 Console.Clear();
                 board.DisplayBoard(_tab);//display board
-                Console.WriteLine($"Winner is player: {_currentPlayer.ToUpper()}");
-                Thread.Sleep(3000);
+                Console.WriteLine($"\n\n\t\tWinner is player: {_currentPlayer.ToUpper()}".ToUpper() +
+                                  $"\n\n\n\n -----type one key on keyboard, to get back to main menu------");
+                Console.ReadKey();
                 _gameFinished = true;
                 return;
             }
@@ -78,8 +86,8 @@ namespace TicTacToe
             if (ifDraw)
             {
                 board.DisplayBoard(_tab);//display board
-                Console.WriteLine($"THERE IS NO WINNER... IT'S DRAW");
-                Thread.Sleep(3000);
+                Console.WriteLine($"THERE IS NO WINNER... IT'S DRAW " +
+                                  $"\n\n\n\n -----tap any key on keyboard, to get back to main menu------");
                 _gameFinished = true;
                 return;
             }
@@ -99,22 +107,10 @@ namespace TicTacToe
         {
             var CheckWinner = new Winner(_boardSize, _currentPlayer, _fieldsToWin);
 
-            if (CheckWinner.CheckWinnerHorizontal())
-            {
-                return true;
-            }
-
-            if (CheckWinner.CheckWinnerVertical())
-            {
-                return true;
-            }
-
-            if (CheckWinner.CheckWinnerSlanAtFront())
-            {
-                return true;
-            }
-
-            if (CheckWinner.CheckWinnerSlantAtBack())
+            if (CheckWinner.CheckWinnerHorizontal() 
+                || CheckWinner.CheckWinnerVertical()
+                || CheckWinner.CheckWinnerSlanAtFront() 
+                || CheckWinner.CheckWinnerSlantAtBack())
             {
                 return true;
             }
@@ -127,6 +123,12 @@ namespace TicTacToe
             var winner = new Winner(_boardSize, _currentPlayer, _fieldsToWin);
             if (winner.IsDraw())
             {
+                var board = new Board();
+                board.DisplayBoard(_tab);//display board
+                Console.WriteLine($"THERE IS NO WINNER... IT'S DRAW " +
+                                  $"\n\n\n\n -----tap any key on keyboard, to get back to main menu------");
+                _gameFinished = true;
+
                 return true;
             }
             return false;

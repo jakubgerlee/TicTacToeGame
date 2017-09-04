@@ -109,18 +109,23 @@ namespace TicTacToe
 
             for (int i = 0; i < boardTab.GetLength(0); i++)
             {
+                if (i == 0)
+                {
+                    Console.Write("\n\t");
+                }
                 for (int j = 0; j <= _boardSize; j++)
                 {
+
                     Console.Write(boardTab[i, j] + "|");
                 } //x|o|x|...
 
-                Console.WriteLine();
+                Console.Write("\n\t");
 
                 for (int j = 0; j <= _boardSize; j++)
                 {
                     Console.Write(separator);
                 } // ----...
-                Console.WriteLine();
+                Console.Write("\n\t");
             }
         }
 

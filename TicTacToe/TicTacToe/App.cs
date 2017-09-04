@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace TicTacToe
 {
@@ -16,8 +15,7 @@ namespace TicTacToe
             GameWithComputer,
             Exit
         }
-
-
+        
         public void Menu()
         {
             while (true)
@@ -32,10 +30,12 @@ namespace TicTacToe
                 switch (ConsoleReadHelper.GetCommnadType("Type command: "))
                 {
                     case CommandTypes.GameForTwo:
+                        Console.Clear();
                         _gameWithAI = false;
                         GameLoop();
                         break;
                     case CommandTypes.GameWithComputer:
+                        Console.Clear();
                         _gameWithAI = true;
                         break;
                     case CommandTypes.Exit:
@@ -57,15 +57,8 @@ namespace TicTacToe
             var board = new Board(_boardSize);
             _boardToPlay = board.CreateBoard();
 
-            if (!_gameWithAI)
-            {
-                var game = new Game(_boardSize, _boardToPlay, _fieldsToWin);
-                game.GameLoop();
-            } //playwithyourself
-            else
-            {
-            } //playwithcomputer
-
+            var game = new Game(_boardSize, _boardToPlay, _fieldsToWin);
+            game.GameLoop(_gameWithAI);
         }
     }
 }
