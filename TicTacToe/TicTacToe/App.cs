@@ -37,6 +37,7 @@ namespace TicTacToe
                     case CommandTypes.GameWithComputer:
                         Console.Clear();
                         _gameWithAI = true;
+                        GameLoop();
                         break;
                     case CommandTypes.Exit:
                         Environment.Exit(0);
