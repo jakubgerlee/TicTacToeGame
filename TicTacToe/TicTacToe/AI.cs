@@ -46,8 +46,6 @@ namespace TicTacToe
                 return _field;
             }
 
-
-
             return field.SymbolField;
         }
 
@@ -100,7 +98,6 @@ namespace TicTacToe
                     {
                         _humanIsCloseToWin = true;
                         PreventHumanWinningHorizontal(field, counterSymbolInRow);
-
                     }
                 }
                 else
@@ -109,7 +106,6 @@ namespace TicTacToe
                     {
                         _humanIsCloseToWin = true;
                         PreventHumanWinningHorizontal(field, counterSymbolInRow);
-
                     }
                 }
 
@@ -155,7 +151,6 @@ namespace TicTacToe
                 _field = checkFiledOnRight.SymbolField;
                 _filedIsFilled = true;
             }
-
         }
 
         public bool CheckItIsCloseToWinVertical(int fieldsToWin)
@@ -180,7 +175,6 @@ namespace TicTacToe
                                 {
                                     _humanIsCloseToWin = true;
                                     PreventHumanWinningVertical(field, counterSymbolInRow);
-
                                 }
                             }
                             else
@@ -189,7 +183,6 @@ namespace TicTacToe
                                 {
                                     _humanIsCloseToWin = true;
                                     PreventHumanWinningVertical(field, counterSymbolInRow);
-
                                 }
                             }
                         }
@@ -197,14 +190,12 @@ namespace TicTacToe
                         {
                             counterSymbolInRow = 0;
                             _field = null;
-                            
                         }
                     }
                     if (_humanIsCloseToWin)
                     {
                         return false;
                     }
-
                 }
                 counterSymbolInRow = 0;
             }

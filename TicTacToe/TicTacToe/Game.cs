@@ -96,6 +96,7 @@ namespace TicTacToe
                 board.DisplayBoard(_tab);//display board
                 Console.WriteLine($"THERE IS NO WINNER... IT'S DRAW " +
                                   $"\n\n\n\n -----tap any key on keyboard, to get back to main menu------");
+                Console.ReadKey();
                 _gameFinished = true;
                 return;
             }
