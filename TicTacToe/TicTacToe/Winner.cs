@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 
 namespace TicTacToe
@@ -232,6 +234,18 @@ namespace TicTacToe
 
 
 
+            return false;
+        }
+
+        public bool IsDraw()
+        {
+            var board = new Board();
+            var currentInfoAboutFields = board.GetCurrentInfoAboutFields();
+            var NumberOfFieldWithMarks = currentInfoAboutFields.Count(x => x.FieldIsEmpty == false);
+            if (NumberOfFieldWithMarks == _boardSize*_boardSize)
+            {
+                return true;
+            }
             return false;
         }
 

@@ -36,6 +36,7 @@ namespace TicTacToe
 
                 if (_gameFinished)//check if someone win
                 {
+                    Console.Clear();
                     _tab = null;
                     _boardSize = 0;
                     _currentPlayer = "x";
@@ -47,8 +48,6 @@ namespace TicTacToe
 
                 Console.Clear();
             }
-
-
         }
 
         public void Turn()
@@ -64,10 +63,23 @@ namespace TicTacToe
             index.FieldIsEmpty = false;
             index.Mark = _currentPlayer;
             var ifWinner = CheckSomeoneWin();
+            var ifDraw = CheckIsItDraw();
 
             if (ifWinner)
             {
+                Console.Clear();
+                board.DisplayBoard(_tab);//display board
                 Console.WriteLine($"Winner is player: {_currentPlayer.ToUpper()}");
+                Thread.Sleep(3000);
+                _gameFinished = true;
+                return;
+            }
+
+            if (ifDraw)
+            {
+                board.DisplayBoard(_tab);//display board
+                Console.WriteLine($"THERE IS NO WINNER... IT'S DRAW");
+                Thread.Sleep(3000);
                 _gameFinished = true;
                 return;
             }
@@ -107,6 +119,16 @@ namespace TicTacToe
                 return true;
             }
 
+            return false;
+        }
+
+        private bool CheckIsItDraw()
+        {
+            var winner = new Winner(_boardSize, _currentPlayer, _fieldsToWin);
+            if (winner.IsDraw())
+            {
+                return true;
+            }
             return false;
         }
 
