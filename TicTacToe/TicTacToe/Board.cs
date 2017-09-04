@@ -166,7 +166,7 @@ namespace TicTacToe
             _letterIndexSymbol = 'A';
             _counter = 0;
             IndexDictionary = null;
-            CurrentInfoAboutFields = null;
+            CurrentInfoAboutFields = new List<Field>();
 
         }
     }
