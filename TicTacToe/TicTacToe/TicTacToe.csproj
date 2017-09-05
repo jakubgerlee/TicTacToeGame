@@ -45,10 +45,10 @@
     <Compile Include="AI.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Board.cs" />
-    <Compile Include="Field.cs" />
+    <Compile Include="object\Field.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Helper\ConsoleReadHelper.cs" />
-    <Compile Include="Index.cs" />
+    <Compile Include="object\Index.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Winner.cs" />

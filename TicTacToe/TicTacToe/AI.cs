@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 
 namespace TicTacToe
 {
@@ -31,7 +30,7 @@ namespace TicTacToe
                     int index1 = rnd.Next(1, _boardSize);
                     int index2 = rnd1.Next(1, _boardSize);
 
-                    field = symbolFields.First(x => x.IndexOne == index1 || x.IndexTwo == index2);
+                    field = symbolFields.FirstOrDefault(x => x.IndexOne == index1 && x.IndexTwo == index2);
                 } while (field.FieldIsEmpty == false);
 
                 _counter++;
@@ -62,8 +61,19 @@ namespace TicTacToe
             if (_field == null)
             {
                 var board = new Board();
-                var findEmptyField = board.GetCurrentInfoAboutFields();
-                var field = findEmptyField.FirstOrDefault(x=> x.FieldIsEmpty);
+                var symbolFields = board.GetCurrentInfoAboutFields();
+                var field = new Field();
+
+                do
+                {
+                    var rnd = new Random(DateTime.Now.Millisecond);
+                    var rnd1 = new Random(DateTime.Now.Second);
+
+                    int index1 = rnd.Next(1, _boardSize);
+                    int index2 = rnd1.Next(1, _boardSize);
+
+                    field = symbolFields.FirstOrDefault(x => x.IndexOne == index1 && x.IndexTwo == index2);
+                } while (field.FieldIsEmpty == false);
                 _field = field.SymbolField;
             }
         }
@@ -126,12 +136,13 @@ namespace TicTacToe
 
             var currentInfoAboutFields = board.GetCurrentInfoAboutFields();
 
-            var checkFiledOnRight= currentInfoAboutFields.FirstOrDefault(x => x.IndexOne == field1.IndexOne && x.IndexTwo == field1.IndexTwo+1); //sprawdzenie czy symbolu po prawej
+            var checkFiledOnRight= currentInfoAboutFields.FirstOrDefault(x => x.IndexOne == field1.IndexOne && x.IndexTwo == field1.IndexTwo+1); //checking symbol on the left
 
-            if (checkFiledOnRight == null || checkFiledOnRight.Mark=="x")//jesli pusty, wtedy wyszedł poza zakres, i musi sprawdzić z lewej strony
+            if (checkFiledOnRight == null || checkFiledOnRight.Mark=="x") //if null, then is out of range -> and check on left side
             {
                 var checkFiledOnLeft = currentInfoAboutFields
-                    .FirstOrDefault(x => x.IndexOne == field1.IndexOne && x.IndexTwo == field1.IndexTwo - (counterSymbolInRow));//sprawdzenie czy symbolu po lewej
+                    .FirstOrDefault(x => x.IndexOne == field1.IndexOne &&
+                                         x.IndexTwo == field1.IndexTwo - (counterSymbolInRow));
 
                 if (checkFiledOnLeft == null)
                 {
@@ -208,12 +219,12 @@ namespace TicTacToe
             var currentInfoAboutFields = board.GetCurrentInfoAboutFields();
 
             var findField = currentInfoAboutFields
-                .FirstOrDefault(x => x.IndexOne == field1.IndexOne + 1 && x.IndexTwo == field1.IndexTwo); //sprawdzenie pola po powtarzającej się sekwencji (na dole)
+                .FirstOrDefault(x => x.IndexOne == field1.IndexOne + 1 && x.IndexTwo == field1.IndexTwo); 
 
-            if (findField == null)//jesli pusty, wtedy wyszedł poza zakres, i musi sprawdzić od góry
+            if (findField == null)
             {
                 findField = currentInfoAboutFields
-                    .FirstOrDefault(x => x.IndexOne == field1.IndexTwo-counterSymbolInRow && x.IndexTwo == field1.IndexTwo);//sprawdzenie pola przed powtarzającą się sekwencją (od góry)
+                    .FirstOrDefault(x => x.IndexOne == field1.IndexTwo-counterSymbolInRow && x.IndexTwo == field1.IndexTwo);
 
                 if (findField == null)
                 {
